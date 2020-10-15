@@ -12,7 +12,7 @@ def get_photo_vk(owner_id, album):
         'album_id': album,
         'extended': 1
     })
-# pprint(response.json())
+    #pprint(response.json())
     for item in response.json()['response']['items']:
         max_size_photo = 0
         link_max_size_photo = ''
@@ -35,9 +35,9 @@ def get_photo_vk(owner_id, album):
             print()
 
 
-TOKEN = 'b93d7eaf6bae38f0a79622f61c63df72296bb22a1ab20de06d639c35de64d34a22f416bbc43dbae4eb5c2'
+TOKEN = ''
 API_BASE_URL = 'https://api.vk.com/method/'
 V = '5.21'
-owner_id = 552934290
+owner_id = 0
 album = 'profile'
 get_photo_vk(owner_id, album)
