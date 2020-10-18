@@ -17,23 +17,23 @@ class GetPhotoVK:
             'v': self.V,
             'owner_id': owner_id,
             'album_id': album,
-            'extended': 1
+            'extended': 1,
+            'count': count_photo
         })
-
-        i = 0
-        while i < count_photo:
+        for item in response.json()['response']['items']:
             max_size_photo = 0
             link_max_size_photo = ''
             count_likes = 0
             date_download = 0
-            item = response.json()['response']['items'][i]
-
+            size = 0
             for key, value in item.items():
                 if 'photo_' in key:
                     size_photo = key.split('_')
                     if int(size_photo[1]) > max_size_photo:
                         max_size_photo = int(size_photo[1])
                         link_max_size_photo = value
+                        r = requests.head(link_max_size_photo)
+                        size = int(r.headers['Content-Length'])
                 elif key == 'likes':
                     count_likes = value['count']
                 elif key == 'date':
@@ -42,8 +42,8 @@ class GetPhotoVK:
             self.list_photo_prop.append({
                 'link': link_max_size_photo,
                 'count_likes': count_likes,
-                'date_download': date_download
+                'date_download': date_download,
+                'photo_size': size
             })
-            i += 1
 
         return self.list_photo_prop
